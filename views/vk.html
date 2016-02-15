@@ -1,0 +1,42 @@
+<div>
+     <h3>Посты группы Loftblog в VK.</h3>
+     <button ng-click="showPost()">JavaScript. День 4</button>
+</div>
+<div ng-repeat="post in posts">
+     <div>
+         {{post.text}}<br>
+         <button ng-click="showComments()">Показать комментарии</button><br><br>
+     </div>
+     <div>
+         <table id='table' width='100%'>
+            <tbody ng-repeat="com in coms">
+               <tr>
+                 <td align='center'>id{{com.from_id}}</td>
+                 <td>{{com.text}}</td>
+                 <td align='center'>{{com.date}}</td>
+               </tr>
+            </tbody>
+         </table>
+     </div>
+</div>
+<br><br>
+<div>
+     <button ng-click="showPost2()">JavaScript. День 3</button>
+</div>
+<div ng-repeat="post2 in posts2">
+     <div>
+          {{post2.text}}<br>
+          <button ng-click="showComments2()">Показать комментарии</button><br><br>
+     </div>
+     <div>
+         <table id='table' border='0' width='100%'>
+            <tbody ng-repeat="com2 in coms2">
+               <tr>
+                 <td align='center'>id{{com2.from_id}}</td>
+                 <td>{{com2.text}}</td>
+                 <td align='center'>{{com2.date}}</td>
+               </tr>
+            </tbody>
+         </table>
+     </div>
+</div>

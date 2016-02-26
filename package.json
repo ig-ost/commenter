@@ -1,12 +1,26 @@
 {
+  "name": "commenter",
+  "version": "1.0.0",
+  "description": "VK, IG, FB, YT, Flickr  posts and comments' remote output and input.",
   "main": "server.js",
   "directories": {
     "test": "tests"
   },
   "scripts": {
-    "test": "karma start karma.conf.js"
+    "test": "karma start karma.conf.js",
+    "start": "node server.js"
   },
- "devDependencies": {
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ig-ost/commenter.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ig-ost/commenter/issues"
+  },
+  "homepage": "https://github.com/ig-ost/commenter#readme",
+  "devDependencies": {
     "jasmine-core": "^2.4.1",
     "karma": "^0.13.21",
     "karma-chrome-launcher": "^0.2.2",

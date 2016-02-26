@@ -8,23 +8,23 @@ angular
    function RouteProviderFn($routeProvider){
       $routeProvider
             .when('/', {
-                 controller : 'vkCtrl',
+                 controller : 'vkCnt',
                  templateUrl:"views/vk.html"
                      })
             .when('/Youtube', {
-                 controller : 'ytCtrl',
+                 controller : 'ytCnt',
                  templateUrl:"views/yt.html"
                      })
             .when('/Facebook', {
-                 controller : 'fbCtrl',
+                 controller : 'fbCnt',
                  templateUrl: 'views/fb.html'
              })
             .when('/Instagram', {
-                 controller : 'igCtrl',
+                 controller : 'igCnt',
                  templateUrl: 'views/ig.html'
              })
             .when('/Flickr', {
-                 controller : 'fkCtrl',
+                 controller : 'fkCnt',
                  templateUrl: 'views/fk.html'
              })
             .otherwise({
@@ -34,13 +34,37 @@ angular
 
 angular
    .module('app')
-   .controller('vkCtrl',VkCtrlFn);
-   VkCtrlFn.$inject = ['$scope', '$http'];
-   function VkCtrlFn($scope, $http){
-       $scope.showPost = function () {
-           var url = 'http://api.vk.com/method/wall.getById?posts=,-37413577_14261&callback=JSON_CALLBACK';
+   .factory('vkFct', vkFctFn);
+   vkFctFn.$inject = ['$http'];
+   function vkFctFn($http){
+       return {
+           vkFctShowPosts: function(){
+               var urlPosts = 'http://api.vk.com/method/wall.getById?posts=,-37413577_14261&callback=JSON_CALLBACK';
+               return $http.jsonp(urlPosts);
+           },
+           vkFctShowComs: function(){
+               var urlComs='http://api.vk.com/method/wall.getComments?owner_id=-37413577&post_id=14261&count=50&callback=JSON_CALLBACK';
+               return $http.jsonp(urlComs);
+           },
+           vkFctShowPosts2: function(){
+               var urlPosts2 = 'http://api.vk.com/method/wall.getById?posts=,-37413577_14243&callback=JSON_CALLBACK';
+               return $http.jsonp(urlPosts2);
+           },
+           vkFctShowComs2: function(){
+               var urlComs2='http://api.vk.com/method/wall.getComments?owner_id=-37413577&post_id=14243&count=20&callback=JSON_CALLBACK';
+               return $http.jsonp(urlComs2);
+           }
+       }
+   }
+
+angular
+   .module('app')
+   .controller('vkCnt',vkCntFn);
+   vkCntFn.$inject = ['$scope', 'vkFct', '$http'];
+   function vkCntFn($scope, vkFct, $http){
+       $scope.vkCntShowPosts = function () {
            $scope.posts = [];
-           $http.jsonp(url)
+           vkFct.vkFctShowPosts()
                 .success(function (data) {
                       $scope.posts = data.response;
                  })
@@ -48,21 +72,19 @@ angular
                       console.log(data);
                  });
        };
-       $scope.showComments = function () {
-           var url = 'http://api.vk.com/method/wall.getComments?owner_id=-37413577&post_id=14261&count=50&callback=JSON_CALLBACK';
+       $scope.vkCntShowComs = function () {
            $scope.coms = [];
-           $http.jsonp(url)
+           vkFct.vkFctShowComs()
                 .success(function (data) {
                       $scope.coms = data.response;
                  })
                 .error(function (data) {
-                    console.log(data);
+                      console.log(data);
                  });
        };
-       $scope.showPost2 = function () {
-           var url = 'http://api.vk.com/method/wall.getById?posts=,-37413577_14243&callback=JSON_CALLBACK';
+       $scope.vkCntShowPosts2 = function () {
            $scope.posts2 = [];
-           $http.jsonp(url)
+           vkFct.vkFctShowPosts2()
                 .success(function (data) {
                       $scope.posts2 = data.response;
                  })
@@ -70,47 +92,46 @@ angular
                       console.log(data);
                  });
        };
-       $scope.showComments2 = function () {
-           var url = 'http://api.vk.com/method/wall.getComments?owner_id=-37413577&post_id=14243&count=20&callback=JSON_CALLBACK';
+       $scope.vkCntShowComs2 = function () {
            $scope.coms2 = [];
-           $http.jsonp(url)
+           vkFct.vkFctShowComs2()
                 .success(function (data) {
                       $scope.coms2 = data.response;
                  })
                 .error(function (data) {
-                    console.log(data);
+                      console.log(data);
                  });
        };
    }
 
 angular
    .module('app')
-   .controller('ytCtrl', YtCtrlFn);
-   YtCtrlFn.$inject = ['$scope'];
-   function YtCtrlFn($scope){
+   .controller('ytCnt', ytCntFn);
+   ytCntFn.$inject = ['$scope'];
+   function ytCntFn($scope){
        $scope.title = "Youtube";
    }
 
 angular
    .module('app')
-   .controller('fbCtrl', FbCtrlFn);
-   FbCtrlFn.$inject = ['$scope'];
-   function FbCtrlFn($scope){
+   .controller('fbCnt', fbCntFn);
+   fbCntFn.$inject = ['$scope'];
+   function fbCntFn($scope){
        $scope.title = "Facebook";
    }
 
 angular
    .module('app')
-   .controller('igCtrl', IgCtrlFn);
-   IgCtrlFn.$inject = ['$scope'];
-   function IgCtrlFn($scope){
+   .controller('igCnt', igCntFn);
+   igCntFn.$inject = ['$scope'];
+   function igCntFn($scope){
        $scope.title = "Instagram";
    }
 
 angular
    .module('app')
-   .controller('fkCtrl', FkCtrlFn);
-   FkCtrlFn.$inject = ['$scope'];
-   function FkCtrlFn($scope){
+   .controller('fkCnt', fkCntFn);
+   fkCntFn.$inject = ['$scope'];
+   function fkCntFn($scope){
        $scope.title = "Flickr";
    }

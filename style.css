@@ -9,6 +9,11 @@
       align: center;
     }
 
+#table, th, td
+    {
+      border: 1px solid #e1e1e1;
+    }
+
 #table thead
     {
       background-color: #fcfcfc;
@@ -24,7 +29,12 @@
       align: center;
     }
 
+.ytTable, th, td
+    {
+      border: 1px solid #e1e1e1;
+    }
+
 .ytTable thead
     {
-      background-color: #fcfcfc;
+      background-color: #ccffff;
     }

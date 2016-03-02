@@ -39,20 +39,16 @@ angular
    function vkFctFn($http){
        return {
            vkFctShowPosts: function(){
-               var urlPosts = 'http://api.vk.com/method/wall.getById?posts=,-37413577_14261&callback=JSON_CALLBACK';
-               return $http.jsonp(urlPosts);
+               return $http.jsonp('http://api.vk.com/method/wall.getById?posts=,-37413577_14261&callback=JSON_CALLBACK');
            },
            vkFctShowComs: function(){
-               var urlComs='http://api.vk.com/method/wall.getComments?owner_id=-37413577&post_id=14261&count=50&callback=JSON_CALLBACK';
-               return $http.jsonp(urlComs);
+               return $http.jsonp('http://api.vk.com/method/wall.getComments?owner_id=-37413577&post_id=14261&count=50&callback=JSON_CALLBACK');
            },
            vkFctShowPosts2: function(){
-               var urlPosts2 = 'http://api.vk.com/method/wall.getById?posts=,-37413577_14243&callback=JSON_CALLBACK';
-               return $http.jsonp(urlPosts2);
+               return $http.jsonp('http://api.vk.com/method/wall.getById?posts=,-37413577_14243&callback=JSON_CALLBACK');
            },
            vkFctShowComs2: function(){
-               var urlComs2='http://api.vk.com/method/wall.getComments?owner_id=-37413577&post_id=14243&count=20&callback=JSON_CALLBACK';
-               return $http.jsonp(urlComs2);
+               return $http.jsonp('http://api.vk.com/method/wall.getComments?owner_id=-37413577&post_id=14243&count=20&callback=JSON_CALLBACK');
            }
        }
    }
@@ -106,11 +102,42 @@ angular
 
 angular
    .module('app')
-   .controller('ytCnt', ytCntFn);
-   ytCntFn.$inject = ['$scope'];
-   function ytCntFn($scope){
-       $scope.title = "Youtube";
+   .factory('ytFct', ytFctFn);
+   ytFctFn.$inject = ['$http'];
+   function ytFctFn($http){
+       return {
+           ytFctShowComs: function(){
+               return $http.get('https://www.googleapis.com/youtube/v3/commentThreads?key=AIzaSyB99IwtYRRrbVsSIXBEjvCOiGXBgv3OcUo&maxResults=10&part=snippet&videoId=CyWJZnNpezU');
+           },
+           ytFctShowComs2: function(){
+               return $http.get('https://www.googleapis.com/youtube/v3/commentThreads?key=AIzaSyB99IwtYRRrbVsSIXBEjvCOiGXBgv3OcUo&maxResults=10&part=snippet&videoId=tmqC-gqxiKA');
+           }
+       }
    }
+
+angular
+    .module('app')
+    .controller('ytCnt', ytCntFn);
+    ytCntFn.$inject = ['$scope', 'ytFct', '$http'];
+    function ytCntFn($scope, ytFct, $http) {
+       $scope.ytCntShowComs = function() {
+          ytFct.ytFctShowComs()
+               .success(function(data) {
+                   $scope.comments = data.items;
+                   $scope.commentsSize = $scope.comments.length;
+                });
+
+       },
+       $scope.ytCntShowComs2 = function() {
+          ytFct.ytFctShowComs2()
+               .success(function(data) {
+                   $scope.comments2 = data.items;
+                   $scope.commentsSize2 = $scope.comments2.length;
+                });
+
+       }
+    }
+
 
 angular
    .module('app')

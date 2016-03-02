@@ -188,3 +188,73 @@ describe('factory vkFct',
       );
    }
 );
+describe('factory ytFct',
+   function(){
+      beforeEach(angular.mock.module('app'));
+      beforeEach(angular.mock.inject(
+         function ($httpBackend) {
+            $httpBackend
+               .whenGET('https://www.googleapis.com/youtube/v3/commentThreads?key=AIzaSyB99IwtYRRrbVsSIXBEjvCOiGXBgv3OcUo&maxResults=10&part=snippet&videoId=CyWJZnNpezU')
+               .respond(200, {value:"comments content"});
+         }
+      ));
+      afterEach(angular.mock.inject(
+         function ($httpBackend) {
+            $httpBackend.flush()
+            $httpBackend.verifyNoOutstandingExpectation();
+            $httpBackend.verifyNoOutstandingRequest();
+         }
+      ));
+      describe('ytFctShowComs()',
+         function () {
+            it('is testing', inject(
+               function (ytFct) {
+                  ytFct
+                     .ytFctShowComs()
+                     .success(function(response) {
+                          expect(response.value).toEqual("comments content");
+                      })
+                     .error( function(response) {
+                        expect(false).toEqual(true);
+                   });
+               }
+            ));
+         }
+      );
+   }
+);
+describe('factory ytFct',
+   function(){
+      beforeEach(angular.mock.module('app'));
+      beforeEach(angular.mock.inject(
+         function ($httpBackend) {
+            $httpBackend
+               .whenGET('https://www.googleapis.com/youtube/v3/commentThreads?key=AIzaSyB99IwtYRRrbVsSIXBEjvCOiGXBgv3OcUo&maxResults=10&part=snippet&videoId=tmqC-gqxiKA')
+               .respond(200, {value:"comments content"});
+         }
+      ));
+      afterEach(angular.mock.inject(
+         function ($httpBackend) {
+            $httpBackend.flush()
+            $httpBackend.verifyNoOutstandingExpectation();
+            $httpBackend.verifyNoOutstandingRequest();
+         }
+      ));
+      describe('ytFctShowComs2()',
+         function () {
+            it('is testing', inject(
+               function (ytFct) {
+                  ytFct
+                     .ytFctShowComs2()
+                     .success(function(response) {
+                          expect(response.value).toEqual("comments content");
+                      })
+                     .error( function(response) {
+                        expect(false).toEqual(true);
+                   });
+               }
+            ));
+         }
+      );
+   }
+);

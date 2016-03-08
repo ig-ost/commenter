@@ -52,7 +52,6 @@ angular
            }
        }
    }
-
 angular
    .module('app')
    .controller('vkCnt',vkCntFn);
@@ -100,6 +99,7 @@ angular
        };
    }
 
+
 angular
    .module('app')
    .factory('ytFct', ytFctFn);
@@ -114,7 +114,6 @@ angular
            }
        }
    }
-
 angular
     .module('app')
     .controller('ytCnt', ytCntFn);
@@ -147,13 +146,33 @@ angular
        $scope.title = "Facebook";
    }
 
+
 angular
    .module('app')
-   .controller('igCnt', igCntFn);
-   igCntFn.$inject = ['$scope'];
-   function igCntFn($scope){
-       $scope.title = "Instagram";
+   .factory('igFct', igFctFn);
+   igFctFn.$inject = ['$http'];
+   function igFctFn($http){
+       return {
+          igFctShowPosts: function(){
+             return $http.jsonp("https://api.instagram.com/v1/users/1515741638/media/recent/?client_id=fe58bbb1a5724d1395b66b3f3728d11c&callback=JSON_CALLBACK");
+          }
+       }
    }
+angular
+   .module('app')
+   .controller('igCnt',igCntFn);
+   igCntFn.$inject = ['$scope', 'igFct', '$http'];
+   function igCntFn($scope, igFct, $http){
+          $scope.pics = [];
+          igFct.igFctShowPosts()
+               .success(function (response) {
+                      $scope.pics = response.data;
+                })
+               .error(function (response) {
+                      console.log(response);
+                });
+   }
+
 
 angular
    .module('app')

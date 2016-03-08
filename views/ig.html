@@ -1,1 +1,22 @@
-<h1>{{title}}</h1>
+<section ng-controller="igCnt as images">
+            <header>
+              <h1>LoftBlog posts in Instagram</h1>
+            </header>
+            <ul>
+                <li ng-repeat="p in pics">
+                  <p>{{p.caption.text}}</p>
+                  <a href="{{p.link}}" target="_blank"><img ng-src="{{p.images.thumbnail.url}}" /></a>
+                  <p>Comments:{{p.comments.count}}</p>
+                  <ul class="comments">
+					<li class="comment" ng-repeat="comment in p.comments.data">
+						<cite class="author">
+							<img ng-src="{{ comment.from.profile_picture }}" width="40" height="40" /> 
+							{{ comment.from.username }}
+						</cite> 
+						{{ comment.text }}
+					</li>
+				</ul>
+                <br><hr><br>
+                </li>
+            </ul>
+</section>

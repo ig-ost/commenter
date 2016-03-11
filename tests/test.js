@@ -74,7 +74,7 @@ describe('factory vkFct',
             $httpBackend.verifyNoOutstandingRequest();
          }
       ));
-      describe('vkFctShowPosts()',
+      describe('function vkFctFn()',
          function () {
             it('is testing', inject(
                function (vkFct) {
@@ -125,6 +125,9 @@ describe('factory ytFct',
             $httpBackend
                .whenGET('https://www.googleapis.com/youtube/v3/commentThreads?key=AIzaSyB99IwtYRRrbVsSIXBEjvCOiGXBgv3OcUo&maxResults=10&part=snippet&videoId=CyWJZnNpezU')
                .respond(200, {value:"comments content"});
+            $httpBackend
+               .whenGET('https://www.googleapis.com/youtube/v3/commentThreads?key=AIzaSyB99IwtYRRrbVsSIXBEjvCOiGXBgv3OcUo&maxResults=10&part=snippet&videoId=5n5YP4G0TJw')
+               .respond(200, {value:"comments2 content"});
          }
       ));
       afterEach(angular.mock.inject(
@@ -134,7 +137,7 @@ describe('factory ytFct',
             $httpBackend.verifyNoOutstandingRequest();
          }
       ));
-      describe('ytFctShowComs()',
+      describe('function ytFctFn()',
          function () {
             it('is testing', inject(
                function (ytFct) {
@@ -145,38 +148,11 @@ describe('factory ytFct',
                       })
                      .error( function(response) {
                         expect(false).toEqual(true);
-                   });
-               }
-            ));
-         }
-      );
-   }
-);
-describe('factory ytFct',
-   function(){
-      beforeEach(angular.mock.module('app'));
-      beforeEach(angular.mock.inject(
-         function ($httpBackend) {
-            $httpBackend
-               .whenGET('https://www.googleapis.com/youtube/v3/commentThreads?key=AIzaSyB99IwtYRRrbVsSIXBEjvCOiGXBgv3OcUo&maxResults=10&part=snippet&videoId=5n5YP4G0TJw')
-               .respond(200, {value:"comments content"});
-         }
-      ));
-      afterEach(angular.mock.inject(
-         function ($httpBackend) {
-            $httpBackend.flush()
-            $httpBackend.verifyNoOutstandingExpectation();
-            $httpBackend.verifyNoOutstandingRequest();
-         }
-      ));
-      describe('ytFctShowComs2()',
-         function () {
-            it('is testing', inject(
-               function (ytFct) {
+                      });
                   ytFct
                      .ytFctShowComs2()
                      .success(function(response) {
-                          expect(response.value).toEqual("comments content");
+                          expect(response.value).toEqual("comments2 content");
                       })
                      .error( function(response) {
                         expect(false).toEqual(true);
@@ -187,6 +163,7 @@ describe('factory ytFct',
       );
    }
 );
+
 describe('factory igFct',
    function(){
       beforeEach(angular.mock.module('app'));
@@ -204,7 +181,7 @@ describe('factory igFct',
             $httpBackend.verifyNoOutstandingRequest();
          }
       ));
-      describe('igFctShowPosts()',
+      describe('function igFctFn()',
          function () {
             it('is testing', inject(
                function (igFct) {
@@ -222,6 +199,7 @@ describe('factory igFct',
       );
    }
 );
+
 describe('factory ghFct',
    function(){
       beforeEach(angular.mock.module('app'));

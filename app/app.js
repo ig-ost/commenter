@@ -23,9 +23,9 @@ angular
                  controller : 'igCnt',
                  templateUrl: 'views/ig.html'
              })
-            .when('/Flickr', {
-                 controller : 'fkCnt',
-                 templateUrl: 'views/fk.html'
+            .when('/GitHub', {
+                 controller : 'ghCnt',
+                 templateUrl: 'views/gh.html'
              })
             .otherwise({
                  redirectTo : '/'
@@ -176,8 +176,135 @@ angular
 
 angular
    .module('app')
-   .controller('fkCnt', fkCntFn);
-   fkCntFn.$inject = ['$scope'];
-   function fkCntFn($scope){
-       $scope.title = "Flickr";
+   .factory('ghFct', ghFctFn);
+   ghFctFn.$inject = ['$http'];
+   function ghFctFn($http){
+       return {
+          ghFctShowUserOmletina: function(){
+             return $http.get("https://api.github.com/users/Omletina");
+          },
+          ghFctShowRepoGetest: function(){
+             return $http.get("https://api.github.com/repos/Omletina/getest");
+          },
+          ghFctShowCommitsOmletina: function(){
+             return $http.get("https://api.github.com/repos/Omletina/getest/commits");
+          },
+          ghFctShowCommentsGetest: function(){
+             return $http.get("https://api.github.com/repos/Omletina/getest/comments");
+          },
+          ghFctShowUserIgost: function(){
+             return $http.get("https://api.github.com/users/ig-ost");
+          },
+          ghFctShowRepoCommenter: function(){
+             return $http.get("https://api.github.com/repos/ig-ost/commenter");
+          },
+          ghFctShowCommitsIgost: function(){
+             return $http.get("https://api.github.com/repos/ig-ost/commenter/commits");
+          },
+          ghFctShowCommentsCommenter: function(){
+             return $http.get("https://api.github.com/repos/ig-ost/commenter/comments");
+          },
+          ghFctShowUserChernobelenkiy: function(){
+             return $http.get("https://api.github.com/users/chernobelenkiy");
+          },
+          ghFctShowRepoFitnessTracker: function(){
+             return $http.get("https://api.github.com/repos/chernobelenkiy/fitness-tracker");
+          },
+          ghFctShowCommitsChernobelenkiy: function(){
+             return $http.get("https://api.github.com/repos/chernobelenkiy/fitness-tracker/commits");
+          },
+          ghFctShowCommentsFitnessTracker: function(){
+             return $http.get("https://api.github.com/repos/chernobelenkiy/fitness-tracker/comments");
+          }
+       }
+   }
+angular
+   .module('app')
+   .controller('ghCnt',ghCntFn);
+   ghCntFn.$inject = ['$scope', 'ghFct', '$http'];
+   function ghCntFn($scope, ghFct, $http){
+          ghFct.ghFctShowUserOmletina()
+               .success(function (data) {
+                      $scope.userOmletina = data;
+                })
+               .error(function (data) {
+                      console.log(data);
+                });
+          ghFct.ghFctShowRepoGetest()
+               .success(function (data) {
+                      $scope.repoGetest = data;
+                })
+               .error(function (data) {
+                      console.log(data);
+                });
+          ghFct.ghFctShowCommitsOmletina()
+               .success(function (data) {
+                      $scope.OmletinaCommits = data;
+                })
+               .error(function (data) {
+                      console.log(data);
+                });
+          ghFct.ghFctShowCommentsGetest()
+               .success(function (data) {
+                      $scope.getestComments = data;
+                })
+               .error(function (data) {
+                      console.log(data);
+                });
+          ghFct.ghFctShowUserIgost()
+               .success(function (data) {
+                      $scope.igostUser = data;
+                })
+               .error(function (data) {
+                      console.log(data);
+                });
+          ghFct.ghFctShowRepoCommenter()
+               .success(function (data) {
+                      $scope.repoCommenter = data;
+                })
+               .error(function (data) {
+                      console.log(data);
+                });
+          ghFct.ghFctShowCommitsIgost()
+               .success(function (data) {
+                      $scope.igostCommits = data;
+                })
+               .error(function (data) {
+                      console.log(data);
+                });
+          ghFct.ghFctShowCommentsCommenter()
+               .success(function (data) {
+                      $scope.commenterComments = data;
+                })
+               .error(function (data) {
+                      console.log(data);
+                });
+          ghFct.ghFctShowUserChernobelenkiy()
+               .success(function (data) {
+                      $scope.userChernobelenkiy = data;
+                })
+               .error(function (data) {
+                      console.log(data);
+                });
+          ghFct.ghFctShowRepoFitnessTracker()
+               .success(function (data) {
+                      $scope.repoFitnessTracker = data;
+                })
+               .error(function (data) {
+                      console.log(data);
+                });
+          ghFct.ghFctShowCommitsChernobelenkiy()
+               .success(function (data) {
+                      $scope.ChernobelenkiyCommits = data;
+                })
+               .error(function (data) {
+                      console.log(data);
+                });
+          ghFct.ghFctShowCommentsFitnessTracker()
+               .success(function (data) {
+                      $scope.FitnessTrackerComments = data;
+                })
+               .error(function (data) {
+                      console.log(data);
+                });
    }

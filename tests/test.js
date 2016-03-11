@@ -11,7 +11,7 @@ describe('config',
                   $httpBackend.expectGET('views/yt.html').respond(200);
                   $httpBackend.expectGET('views/fb.html').respond(200);
                   $httpBackend.expectGET('views/ig.html').respond(200);
-                  $httpBackend.expectGET('views/fk.html').respond(200);
+                  $httpBackend.expectGET('views/gh.html').respond(200);
   
                   $location.path('/');
                   $rootScope.$digest();
@@ -37,11 +37,11 @@ describe('config',
                   expect($route.current.templateUrl).toBe('views/ig.html');
                   expect($route.current.controller).toBe('igCnt');
 
-                  $location.path('/Flickr');
+                  $location.path('/GitHub');
                   $rootScope.$digest();
-                  expect($location.path()).toBe('/Flickr');
-                  expect($route.current.templateUrl).toBe('views/fk.html');
-                  expect($route.current.controller).toBe('fkCnt');
+                  expect($location.path()).toBe('/GitHub');
+                  expect($route.current.templateUrl).toBe('views/gh.html');
+                  expect($route.current.controller).toBe('ghCnt');
             });
          }
       ); 
@@ -283,6 +283,162 @@ describe('factory igFct',
                      .igFctShowPosts()
                      .success(function(response) {
                          expect(response.value).toEqual("post content");
+                      })
+                     .error( function(response) {
+                        expect(false).toEqual(true);
+                   });
+               }
+            ));
+         }
+      );
+   }
+);
+describe('factory ghFct',
+   function(){
+      beforeEach(angular.mock.module('app'));
+      beforeEach(angular.mock.inject(
+         function ($httpBackend) {
+            $httpBackend
+               .whenGET('https://api.github.com/users/Omletina')
+               .respond(200, {value:"Omletina"});
+            $httpBackend
+               .whenGET('https://api.github.com/repos/Omletina/getest')
+               .respond(200, {value:"getest"});
+            $httpBackend
+               .whenGET('https://api.github.com/repos/Omletina/getest/commits')
+               .respond(200, {value:"Omletina commits"});
+            $httpBackend
+               .whenGET('https://api.github.com/repos/Omletina/getest/comments')
+               .respond(200, {value:"getest comments"});
+            $httpBackend
+               .whenGET('https://api.github.com/users/ig-ost')
+               .respond(200, {value:"ig-ost"});
+            $httpBackend
+               .whenGET('https://api.github.com/repos/ig-ost/commenter')
+               .respond(200, {value:"commenter"});
+            $httpBackend
+               .whenGET('https://api.github.com/repos/ig-ost/commenter/commits')
+               .respond(200, {value:"ig-ost commits"});
+            $httpBackend
+               .whenGET('https://api.github.com/repos/ig-ost/commenter/comments')
+               .respond(200, {value:"commenter comments"});
+            $httpBackend
+               .whenGET('https://api.github.com/users/chernobelenkiy')
+               .respond(200, {value:"chernobelenkiy"});
+            $httpBackend
+               .whenGET('https://api.github.com/repos/chernobelenkiy/fitness-tracker')
+               .respond(200, {value:"fitness-tracker"});
+            $httpBackend
+               .whenGET('https://api.github.com/repos/chernobelenkiy/fitness-tracker/commits')
+               .respond(200, {value:"chernobelenkiy commits"});
+            $httpBackend
+               .whenGET('https://api.github.com/repos/chernobelenkiy/fitness-tracker/comments')
+               .respond(200, {value:"fitness-tracker comments"});
+         }
+      ));
+      afterEach(angular.mock.inject(
+         function ($httpBackend) {
+            $httpBackend.flush()
+            $httpBackend.verifyNoOutstandingExpectation();
+            $httpBackend.verifyNoOutstandingRequest();
+         }
+      ));
+      describe('function ghFctFn()',
+         function () {
+            it('is testing', inject(
+               function (ghFct) {
+                   ghFct
+                     .ghFctShowUserOmletina()
+                     .success(function(response) {
+                          expect(response.value).toEqual("Omletina");
+                      })
+                     .error( function(response) {
+                        expect(false).toEqual(true);
+                   });
+                   ghFct
+                     .ghFctShowRepoGetest()
+                     .success(function(response) {
+                          expect(response.value).toEqual("getest");
+                      })
+                     .error( function(response) {
+                        expect(false).toEqual(true);
+                   });
+                   ghFct
+                     .ghFctShowCommitsOmletina()
+                     .success(function(response) {
+                          expect(response.value).toEqual("Omletina commits");
+                      })
+                     .error( function(response) {
+                        expect(false).toEqual(true);
+                   });
+                   ghFct
+                     .ghFctShowCommentsGetest()
+                     .success(function(response) {
+                          expect(response.value).toEqual("getest comments");
+                      })
+                     .error( function(response) {
+                        expect(false).toEqual(true);
+                   });
+                   ghFct
+                     .ghFctShowUserIgost()
+                     .success(function(response) {
+                          expect(response.value).toEqual("ig-ost");
+                      })
+                     .error( function(response) {
+                        expect(false).toEqual(true);
+                   });
+                   ghFct
+                     .ghFctShowRepoCommenter()
+                     .success(function(response) {
+                          expect(response.value).toEqual("commenter");
+                      })
+                     .error( function(response) {
+                        expect(false).toEqual(true);
+                   });
+                   ghFct
+                     .ghFctShowCommitsIgost()
+                     .success(function(response) {
+                          expect(response.value).toEqual("ig-ost commits");
+                      })
+                     .error( function(response) {
+                        expect(false).toEqual(true);
+                   });
+                   ghFct
+                     .ghFctShowCommentsCommenter()
+                     .success(function(response) {
+                          expect(response.value).toEqual("commenter comments");
+                      })
+                     .error( function(response) {
+                        expect(false).toEqual(true);
+                   });
+                   ghFct
+                     .ghFctShowUserChernobelenkiy()
+                     .success(function(response) {
+                          expect(response.value).toEqual("chernobelenkiy");
+                      })
+                     .error( function(response) {
+                        expect(false).toEqual(true);
+                   });
+                  ghFct
+                     .ghFctShowRepoFitnessTracker()
+                     .success(function(response) {
+                          expect(response.value).toEqual("fitness-tracker");
+                      })
+                     .error( function(response) {
+                        expect(false).toEqual(true);
+                   });
+                  ghFct
+                     .ghFctShowCommitsChernobelenkiy()
+                     .success(function(response) {
+                          expect(response.value).toEqual("chernobelenkiy commits");
+                      })
+                     .error( function(response) {
+                        expect(false).toEqual(true);
+                   });
+                  ghFct
+                     .ghFctShowCommentsFitnessTracker()
+                     .success(function(response) {
+                          expect(response.value).toEqual("fitness-tracker comments");
                       })
                      .error( function(response) {
                         expect(false).toEqual(true);

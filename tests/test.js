@@ -56,6 +56,15 @@ describe('factory vkFct',
             $httpBackend
                .whenJSONP("http://api.vk.com/method/wall.getById?posts=,-37413577_14261&callback=JSON_CALLBACK")
                .respond(200, {value:"post content"});
+            $httpBackend
+               .whenJSONP("http://api.vk.com/method/wall.getComments?owner_id=-37413577&post_id=14261&count=50&callback=JSON_CALLBACK")
+               .respond(200, {value:"comments content"});
+            $httpBackend
+               .whenJSONP("http://api.vk.com/method/wall.getById?posts=,-37413577_14243&callback=JSON_CALLBACK")
+               .respond(200, {value:"post2 content"});
+            $httpBackend
+               .whenJSONP("http://api.vk.com/method/wall.getComments?owner_id=-37413577&post_id=14243&count=20&callback=JSON_CALLBACK")
+               .respond(200, {value:"comments2 content"});
          }
       ));
       afterEach(angular.mock.inject(
@@ -76,34 +85,7 @@ describe('factory vkFct',
                       })
                      .error( function(response) {
                         expect(false).toEqual(true);
-                   });
-               }
-            ));
-         }
-      );
-   }
-);
-describe('factory vkFct',
-   function(){
-      beforeEach(angular.mock.module('app'));
-      beforeEach(angular.mock.inject(
-         function ($httpBackend) {
-            $httpBackend
-               .whenJSONP("http://api.vk.com/method/wall.getComments?owner_id=-37413577&post_id=14261&count=50&callback=JSON_CALLBACK")
-               .respond(200, {value:"comments content"});
-         }
-      ));
-      afterEach(angular.mock.inject(
-         function ($httpBackend) {
-            $httpBackend.flush()
-            $httpBackend.verifyNoOutstandingExpectation();
-            $httpBackend.verifyNoOutstandingRequest();
-         }
-      ));
-      describe('vkFctShowComs()',
-         function () {
-            it('is testing', inject(
-               function (vkFct) {
+                      });
                   vkFct
                      .vkFctShowComs()
                      .success(function(response) {
@@ -111,83 +93,30 @@ describe('factory vkFct',
                       })
                      .error( function(response) {
                         expect(false).toEqual(true);
-                   });
-               }
-            ));
-         }
-      );
-   }
-);
-describe('factory vkFct',
-   function(){
-      beforeEach(angular.mock.module('app'));
-      beforeEach(angular.mock.inject(
-         function ($httpBackend) {
-            $httpBackend
-               .whenJSONP("http://api.vk.com/method/wall.getById?posts=,-37413577_14243&callback=JSON_CALLBACK")
-               .respond(200, {value:"post content"});
-         }
-      ));
-      afterEach(angular.mock.inject(
-         function ($httpBackend) {
-            $httpBackend.flush()
-            $httpBackend.verifyNoOutstandingExpectation();
-            $httpBackend.verifyNoOutstandingRequest();
-         }
-      ));
-      describe('vkFctShowPosts2()',
-         function () {
-            it('is testing', inject(
-               function (vkFct) {
+                      });
                   vkFct
                      .vkFctShowPosts2()
                      .success(function(response) {
-                         expect(response.value).toEqual("post content");
+                         expect(response.value).toEqual("post2 content");
                       })
                      .error( function(response) {
                         expect(false).toEqual(true);
-                   });
-               }
-            ));
-         }
-      );
-   }
-);
-describe('factory vkFct',
-   function(){
-      beforeEach(angular.mock.module('app'));
-      beforeEach(angular.mock.inject(
-         function ($httpBackend) {
-            $httpBackend
-               .whenJSONP("http://api.vk.com/method/wall.getComments?owner_id=-37413577&post_id=14243&count=20&callback=JSON_CALLBACK")
-               .respond(200, {value:"comments content"});
-         }
-      ));
-      afterEach(angular.mock.inject(
-         function ($httpBackend) {
-            $httpBackend.flush()
-            $httpBackend.verifyNoOutstandingExpectation();
-            $httpBackend.verifyNoOutstandingRequest();
-         }
-      ));
-      describe('vkFctShowComs2()',
-         function () {
-            it('is testing', inject(
-               function (vkFct) {
+                      });
                   vkFct
                      .vkFctShowComs2()
                      .success(function(response) {
-                         expect(response.value).toEqual("comments content");
+                         expect(response.value).toEqual("comments2 content");
                       })
                      .error( function(response) {
                         expect(false).toEqual(true);
-                   });
+                      });
                }
             ));
          }
       );
    }
 );
+
 describe('factory ytFct',
    function(){
       beforeEach(angular.mock.module('app'));

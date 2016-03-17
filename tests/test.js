@@ -48,6 +48,79 @@ describe('config',
    }
 );
 
+describe('factory fbFct',
+   function(){
+      beforeEach(angular.mock.module('app'));
+      beforeEach(angular.mock.inject(
+         function ($httpBackend) {
+            $httpBackend
+               .whenGET("https://graph.facebook.com/loftblog/feed?access_token=1418975825038822|c0383c010531c0f19a1ae48d13a00634")
+               .respond(200, {value:"post content"});
+         }
+      ));
+      afterEach(angular.mock.inject(
+         function ($httpBackend) {
+            $httpBackend.flush();
+            $httpBackend.verifyNoOutstandingExpectation();
+            $httpBackend.verifyNoOutstandingRequest();
+         }
+      ));
+      describe('fbFctShowPosts()',
+         function () {
+            it('is testing', inject(
+               function (fbFct) {
+                  fbFct
+                     .fbFctShowPosts()
+                     .success(function(response) {
+                         expect(response.value).toEqual("post content");
+                      })
+                     .error( function(response) {
+                        expect(false).toEqual(true);
+                   });
+               }
+            ));
+         }
+      );
+   }
+);
+
+describe('factory igFct',
+   function(){
+      beforeEach(angular.mock.module('app'));
+      beforeEach(angular.mock.inject(
+         function ($httpBackend) {
+            $httpBackend
+               .whenJSONP("https://api.instagram.com/v1/users/1515741638/media/recent/?client_id=fe58bbb1a5724d1395b66b3f3728d11c&callback=JSON_CALLBACK")
+               .respond(200, {value:"post content"});
+         }
+      ));
+      afterEach(angular.mock.inject(
+         function ($httpBackend) {
+            $httpBackend.flush()
+            $httpBackend.verifyNoOutstandingExpectation();
+            $httpBackend.verifyNoOutstandingRequest();
+         }
+      ));
+      describe('function igFctFn()',
+         function () {
+            it('is testing', inject(
+               function (igFct) {
+                  igFct
+                     .igFctShowPosts()
+                     .success(function(response) {
+                         expect(response.value).toEqual("post content");
+                      })
+                     .error( function(response) {
+                        expect(false).toEqual(true);
+                   });
+               }
+            ));
+         }
+      );
+   }
+);
+
+
 describe('factory vkFct',
    function(){
       beforeEach(angular.mock.module('app'));
@@ -164,77 +237,7 @@ describe('factory ytFct',
    }
 );
 
-describe('factory fbFct',
-   function(){
-      beforeEach(angular.mock.module('app'));
-      beforeEach(angular.mock.inject(
-         function ($httpBackend) {
-            $httpBackend
-               .whenGET("https://graph.facebook.com/loftblog/feed?access_token=1418975825038822|c0383c010531c0f19a1ae48d13a00634")
-               .respond(200, {value:"post content"});
-         }
-      ));
-      afterEach(angular.mock.inject(
-         function ($httpBackend) {
-            $httpBackend.flush();
-            $httpBackend.verifyNoOutstandingExpectation();
-            $httpBackend.verifyNoOutstandingRequest();
-         }
-      ));
-      describe('fbFctShowPosts()',
-         function () {
-            it('is testing', inject(
-               function (fbFct) {
-                  fbFct
-                     .fbFctShowPosts()
-                     .success(function(response) {
-                         expect(response.value).toEqual("post content");
-                      })
-                     .error( function(response) {
-                        expect(false).toEqual(true);
-                   });
-               }
-            ));
-         }
-      );
-   }
-);
 
-describe('factory igFct',
-   function(){
-      beforeEach(angular.mock.module('app'));
-      beforeEach(angular.mock.inject(
-         function ($httpBackend) {
-            $httpBackend
-               .whenJSONP("https://api.instagram.com/v1/users/1515741638/media/recent/?client_id=fe58bbb1a5724d1395b66b3f3728d11c&callback=JSON_CALLBACK")
-               .respond(200, {value:"post content"});
-         }
-      ));
-      afterEach(angular.mock.inject(
-         function ($httpBackend) {
-            $httpBackend.flush()
-            $httpBackend.verifyNoOutstandingExpectation();
-            $httpBackend.verifyNoOutstandingRequest();
-         }
-      ));
-      describe('function igFctFn()',
-         function () {
-            it('is testing', inject(
-               function (igFct) {
-                  igFct
-                     .igFctShowPosts()
-                     .success(function(response) {
-                         expect(response.value).toEqual("post content");
-                      })
-                     .error( function(response) {
-                        expect(false).toEqual(true);
-                   });
-               }
-            ));
-         }
-      );
-   }
-);
 
 describe('factory ghFct',
    function(){

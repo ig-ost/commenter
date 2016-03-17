@@ -7,14 +7,6 @@ angular
    RouteProviderFn.$inject = ['$routeProvider'];
    function RouteProviderFn($routeProvider){
       $routeProvider
-            .when('/', {
-                 controller : 'vkCnt',
-                 templateUrl:"views/vk.html"
-                     })
-            .when('/Youtube', {
-                 controller : 'ytCnt',
-                 templateUrl:"views/yt.html"
-                     })
             .when('/Facebook', {
                  controller : 'fbCnt',
                  templateUrl: 'views/fb.html'
@@ -23,6 +15,14 @@ angular
                  controller : 'igCnt',
                  templateUrl: 'views/ig.html'
              })
+            .when('/VKontakte', {
+                 controller : 'vkCnt',
+                 templateUrl:"views/vk.html"
+                     })
+            .when('/Youtube', {
+                 controller : 'ytCnt',
+                 templateUrl:"views/yt.html"
+                     })
             .when('/GitHub', {
                  controller : 'ghCnt',
                  templateUrl: 'views/gh.html'
@@ -31,6 +31,62 @@ angular
                  redirectTo : '/'
              });
     }
+
+
+
+angular
+   .module('app')
+   .factory('fbFct', fbFctFn);
+   fbFctFn.$inject = ['$http'];
+   function fbFctFn($http){
+       return {
+          fbFctShowPosts: function(){
+             return $http.get('https://graph.facebook.com/loftblog/feed?access_token=1418975825038822|c0383c010531c0f19a1ae48d13a00634');
+          }
+       }
+   }
+angular
+   .module('app')
+   .controller('fbCnt',fbCntFn);
+   fbCntFn.$inject = ['$scope', 'fbFct', '$http'];
+   function fbCntFn($scope, fbFct, $http){
+          fbFct.fbFctShowPosts()
+               .success(function (response) {
+                      $scope.feed = response;
+                })
+               .error(function (response) {
+                      console.log(response);
+                });
+       }
+
+
+
+angular
+   .module('app')
+   .factory('igFct', igFctFn);
+   igFctFn.$inject = ['$http'];
+   function igFctFn($http){
+       return {
+          igFctShowPosts: function(){
+             return $http.jsonp("https://api.instagram.com/v1/users/1515741638/media/recent/?client_id=fe58bbb1a5724d1395b66b3f3728d11c&callback=JSON_CALLBACK");
+          }
+       }
+   }
+angular
+   .module('app')
+   .controller('igCnt',igCntFn);
+   igCntFn.$inject = ['$scope', 'igFct', '$http'];
+   function igCntFn($scope, igFct, $http){
+          $scope.pics = [];
+          igFct.igFctShowPosts()
+               .success(function (response) {
+                      $scope.pics = response.data;
+                })
+               .error(function (response) {
+                      console.log(response);
+                });
+   }
+
 
 angular
    .module('app')
@@ -136,60 +192,6 @@ angular
 
        }
     }
-
-
-angular
-   .module('app')
-   .factory('fbFct', fbFctFn);
-   fbFctFn.$inject = ['$http'];
-   function fbFctFn($http){
-       return {
-          fbFctShowPosts: function(){
-             return $http.get('https://graph.facebook.com/loftblog/feed?access_token=1418975825038822|c0383c010531c0f19a1ae48d13a00634');
-          }
-       }
-   }
-angular
-   .module('app')
-   .controller('fbCnt',fbCntFn);
-   fbCntFn.$inject = ['$scope', 'fbFct', '$http'];
-   function fbCntFn($scope, fbFct, $http){
-          fbFct.fbFctShowPosts()
-               .success(function (response) {
-                      $scope.feed = response;
-                })
-               .error(function (response) {
-                      console.log(response);
-                });
-       }
-
-
-
-angular
-   .module('app')
-   .factory('igFct', igFctFn);
-   igFctFn.$inject = ['$http'];
-   function igFctFn($http){
-       return {
-          igFctShowPosts: function(){
-             return $http.jsonp("https://api.instagram.com/v1/users/1515741638/media/recent/?client_id=fe58bbb1a5724d1395b66b3f3728d11c&callback=JSON_CALLBACK");
-          }
-       }
-   }
-angular
-   .module('app')
-   .controller('igCnt',igCntFn);
-   igCntFn.$inject = ['$scope', 'igFct', '$http'];
-   function igCntFn($scope, igFct, $http){
-          $scope.pics = [];
-          igFct.igFctShowPosts()
-               .success(function (response) {
-                      $scope.pics = response.data;
-                })
-               .error(function (response) {
-                      console.log(response);
-                });
-   }
 
 
 angular

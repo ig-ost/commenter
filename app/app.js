@@ -140,11 +140,29 @@ angular
 
 angular
    .module('app')
-   .controller('fbCnt', fbCntFn);
-   fbCntFn.$inject = ['$scope'];
-   function fbCntFn($scope){
-       $scope.title = "Facebook";
+   .factory('fbFct', fbFctFn);
+   fbFctFn.$inject = ['$http'];
+   function fbFctFn($http){
+       return {
+          fbFctShowPosts: function(){
+             return $http.get('https://graph.facebook.com/loftblog/feed?access_token=1418975825038822|c0383c010531c0f19a1ae48d13a00634');
+          }
+       }
    }
+angular
+   .module('app')
+   .controller('fbCnt',fbCntFn);
+   fbCntFn.$inject = ['$scope', 'fbFct', '$http'];
+   function fbCntFn($scope, fbFct, $http){
+          fbFct.fbFctShowPosts()
+               .success(function (response) {
+                      $scope.feed = response;
+                })
+               .error(function (response) {
+                      console.log(response);
+                });
+       }
+
 
 
 angular

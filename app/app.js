@@ -7,7 +7,7 @@ angular
    RouteProviderFn.$inject = ['$routeProvider'];
    function RouteProviderFn($routeProvider){
       $routeProvider
-            .when('/Facebook', {
+            .when('/', {
                  controller : 'fbCnt',
                  templateUrl: 'views/fb.html'
              })

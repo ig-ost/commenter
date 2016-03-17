@@ -7,25 +7,13 @@ describe('config',
             angular.mock.inject(
                function($httpBackend, $location, $rootScope, $route) {
 
-                  $httpBackend.expectGET('views/vk.html').respond(200);
-                  $httpBackend.expectGET('views/yt.html').respond(200);
                   $httpBackend.expectGET('views/fb.html').respond(200);
                   $httpBackend.expectGET('views/ig.html').respond(200);
+                  $httpBackend.expectGET('views/vk.html').respond(200);
+                  $httpBackend.expectGET('views/yt.html').respond(200);
                   $httpBackend.expectGET('views/gh.html').respond(200);
-  
-                  $location.path('/');
-                  $rootScope.$digest();
-                  expect($location.path()).toBe('/');
-                  expect($route.current.templateUrl).toBe('views/vk.html');
-                  expect($route.current.controller).toBe('vkCnt');
-  
-                  $location.path('/Youtube');
-                  $rootScope.$digest();
-                  expect($location.path()).toBe('/Youtube');
-                  expect($route.current.templateUrl).toBe('views/yt.html');
-                  expect($route.current.controller).toBe('ytCnt');
 
-                  $location.path('/Facebook');
+                  $location.path('/');
                   $rootScope.$digest();
                   expect($location.path()).toBe('/Facebook');
                   expect($route.current.templateUrl).toBe('views/fb.html');
@@ -36,6 +24,18 @@ describe('config',
                   expect($location.path()).toBe('/Instagram');
                   expect($route.current.templateUrl).toBe('views/ig.html');
                   expect($route.current.controller).toBe('igCnt');
+  
+                  $location.path('/VKontakte');
+                  $rootScope.$digest();
+                  expect($location.path()).toBe('/');
+                  expect($route.current.templateUrl).toBe('views/vk.html');
+                  expect($route.current.controller).toBe('vkCnt');
+  
+                  $location.path('/Youtube');
+                  $rootScope.$digest();
+                  expect($location.path()).toBe('/Youtube');
+                  expect($route.current.templateUrl).toBe('views/yt.html');
+                  expect($route.current.controller).toBe('ytCnt');
 
                   $location.path('/GitHub');
                   $rootScope.$digest();

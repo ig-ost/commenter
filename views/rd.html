@@ -4,8 +4,9 @@
      <div ng-controller="rdCnt">
          <div id="rdPost" ng-repeat="post in posts.data.children">
              <h3>{{ post.data.title }}</h3>
-             автор:  {{ post.data.author }}<br><br>
-             <a href="{{ post.data.url }}">показать</a><br><br>
+             автор: {{ post.data.author }}<br><br>
+             домен: {{ post.data.domain }}<br><br>
+             <a href="{{ post.data.url }}">посмотреть ролик на Youtube</a><br><br>
              <span>Коментарии: {{ post.data.num_comments }} </span>
          </div>
      </div>

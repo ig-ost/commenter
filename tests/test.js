@@ -10,6 +10,7 @@ describe('config',
                   $httpBackend.expectGET('views/fb.html').respond(200);
                   $httpBackend.expectGET('views/ig.html').respond(200);
                   $httpBackend.expectGET('views/vk.html').respond(200);
+                  $httpBackend.expectGET('views/rd.html').respond(200);
                   $httpBackend.expectGET('views/yt.html').respond(200);
                   $httpBackend.expectGET('views/gh.html').respond(200);
 
@@ -30,6 +31,12 @@ describe('config',
                   expect($location.path()).toBe('/');
                   expect($route.current.templateUrl).toBe('views/vk.html');
                   expect($route.current.controller).toBe('vkCnt');
+
+                  $location.path('/Reddit');
+                  $rootScope.$digest();
+                  expect($location.path()).toBe('/Reddit');
+                  expect($route.current.templateUrl).toBe('views/rd.html');
+                  expect($route.current.controller).toBe('rdCnt');
   
                   $location.path('/Youtube');
                   $rootScope.$digest();
@@ -183,6 +190,42 @@ describe('factory vkFct',
                      .error( function(response) {
                         expect(false).toEqual(true);
                       });
+               }
+            ));
+         }
+      );
+   }
+);
+
+describe('factory rdFct',
+   function(){
+      beforeEach(angular.mock.module('app'));
+      beforeEach(angular.mock.inject(
+         function ($httpBackend) {
+            $httpBackend
+               .whenGET("http://api.reddit.com/r/programming/user/loftblog/overview?limit=20")
+               .respond(200, {value:"post content"});
+         }
+      ));
+      afterEach(angular.mock.inject(
+         function ($httpBackend) {
+            $httpBackend.flush();
+            $httpBackend.verifyNoOutstandingExpectation();
+            $httpBackend.verifyNoOutstandingRequest();
+         }
+      ));
+      describe('rdFctShowPosts()',
+         function () {
+            it('is testing', inject(
+               function (rdFct) {
+                  rdFct
+                     .rdFctShowPosts()
+                     .success(function(response) {
+                         expect(response.value).toEqual("post content");
+                      })
+                     .error( function(response) {
+                        expect(false).toEqual(true);
+                   });
                }
             ));
          }

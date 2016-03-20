@@ -19,6 +19,10 @@ angular
                  controller : 'vkCnt',
                  templateUrl:"views/vk.html"
                      })
+            .when('/Reddit', {
+                 controller : 'rdCnt',
+                 templateUrl:"views/rd.html"
+                     })
             .when('/Youtube', {
                  controller : 'ytCnt',
                  templateUrl:"views/yt.html"
@@ -57,7 +61,7 @@ angular
                .error(function (response) {
                       console.log(response);
                 });
-       }
+   }
 
 
 
@@ -153,6 +157,31 @@ angular
                       console.log(data);
                  });
        };
+   }
+
+angular
+   .module('app')
+   .factory('rdFct', rdFctFn);
+   rdFctFn.$inject = ['$http'];
+   function rdFctFn($http){
+       return {
+          rdFctShowPosts: function(){
+             return $http.get('http://api.reddit.com/r/programming/user/loftblog/overview?limit=20');
+          }
+       }
+   }
+angular
+   .module('app')
+   .controller('rdCnt',rdCntFn);
+   rdCntFn.$inject = ['$scope', 'rdFct', '$http'];
+   function rdCntFn($scope, rdFct, $http){
+          rdFct.rdFctShowPosts()
+               .success(function (response) {
+                      $scope.posts = response;
+                })
+               .error(function (response) {
+                      console.log(response);
+                });
    }
 
 

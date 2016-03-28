@@ -98,6 +98,9 @@ angular
    vkFctFn.$inject = ['$http'];
    function vkFctFn($http){
        return {
+           vkFctShowLastPosts: function(){
+               return $http.jsonp('http://api.vk.com/method/wall.get?owner_id=-37413577&count=15&callback=JSON_CALLBACK');
+           },
            vkFctShowPosts: function(){
                return $http.jsonp('http://api.vk.com/method/wall.getById?posts=,-37413577_14261&callback=JSON_CALLBACK');
            },
@@ -117,6 +120,18 @@ angular
    .controller('vkCnt',vkCntFn);
    vkCntFn.$inject = ['$scope', 'vkFct', '$http'];
    function vkCntFn($scope, vkFct, $http){
+           $scope.items = [];
+           vkFct.vkFctShowLastPosts()
+                .success(function (data) {
+                    var response = data.response;
+                    if (response !== undefined) {
+                       response.shift();
+                       $scope.items = response;
+                    }
+                 })
+                .error(function (data) {
+                      console.log(data);
+                 });
        $scope.vkCntShowPosts = function () {
            $scope.posts = [];
            vkFct.vkFctShowPosts()
@@ -158,6 +173,7 @@ angular
                  });
        };
    }
+
 
 angular
    .module('app')

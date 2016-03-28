@@ -46,3 +46,20 @@
   background-color: #F7F7F9;
   margin: 5px 0 0 0;
 }
+#vkTable
+    {
+      border-collapse: collapse;
+    }
+    #vkTable, th, td
+    {
+      border: 1px solid #e1e1e1;
+    }
+    #vkTable th, td
+    {
+      padding: 6px;
+      align: center;
+    }
+    #vkTable thead
+    {
+      background-color: #fcfcfc;
+    }

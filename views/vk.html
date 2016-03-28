@@ -1,4 +1,33 @@
-<h3>Посты группы Loftblog в VK.</h3>
+﻿<div style="width:300px;float:right">
+
+      <input type="text" id="txt" autofocus>
+ 
+     <button onclick="VK.Auth.login(RemotePosting);">Добавить пост</button>
+
+</div>
+<table id='table' border='1' width='100%'>
+      <caption><h2>Стена группы Loftblog в VK</h2></caption>
+      <thead>
+             <tr>
+                 <th>photo</th>
+                 <th>text</th>
+                 <th>date</th>
+                 <th>comments</th>
+                 <th>likes</th>
+             </tr>
+      </thead>
+      <tbody ng-repeat="item in items">
+             <tr aign='center'>
+                 <td><img src="{{item.attachment.photo.src}}"></img></td>
+                 <td>{{item.text}}</td>
+                 <td>{{item.date | date}}</td>
+                 <td>{{item.comments.count}}</td>
+                 <td>{{item.likes.count}}</td>
+             </tr>
+      </tbody>
+</table>
+<br>
+<h3>Курс JavaScript.</h3>
 <div>
      <button ng-click="vkCntShowPosts()">JavaScript. День 4</button>
 </div><br>

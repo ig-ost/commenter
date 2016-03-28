@@ -16,7 +16,7 @@ describe('config',
 
                   $location.path('/');
                   $rootScope.$digest();
-                  expect($location.path()).toBe('/Facebook');
+                  expect($location.path()).toBe('/');
                   expect($route.current.templateUrl).toBe('views/fb.html');
                   expect($route.current.controller).toBe('fbCnt');
 
@@ -28,7 +28,7 @@ describe('config',
   
                   $location.path('/VKontakte');
                   $rootScope.$digest();
-                  expect($location.path()).toBe('/');
+                  expect($location.path()).toBe('/VKontakte');
                   expect($route.current.templateUrl).toBe('views/vk.html');
                   expect($route.current.controller).toBe('vkCnt');
 

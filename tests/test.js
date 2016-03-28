@@ -134,6 +134,9 @@ describe('factory vkFct',
       beforeEach(angular.mock.inject(
          function ($httpBackend) {
             $httpBackend
+               .whenJSONP("http://api.vk.com/method/wall.get?owner_id=-37413577&count=15&callback=JSON_CALLBACK")
+               .respond(200, {value:"last posts content"});
+            $httpBackend
                .whenJSONP("http://api.vk.com/method/wall.getById?posts=,-37413577_14261&callback=JSON_CALLBACK")
                .respond(200, {value:"post content"});
             $httpBackend
@@ -158,6 +161,14 @@ describe('factory vkFct',
          function () {
             it('is testing', inject(
                function (vkFct) {
+                  vkFct
+                     .vkFctShowLastPosts()
+                     .success(function(response) {
+                         expect(response.value).toEqual("last posts content");
+                      })
+                     .error( function(response) {
+                        expect(false).toEqual(true);
+                      });
                   vkFct
                      .vkFctShowPosts()
                      .success(function(response) {
